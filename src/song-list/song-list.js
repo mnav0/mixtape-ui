@@ -35,7 +35,7 @@ const SongList = () => {
 
   return (
     <div>
-      {(songLoading || artistLoading) ? (
+      {(songLoading || artistLoading || genreLoading) ? (
         <div>
         <h1>song loading true</h1>
         <p>{username}</p>
