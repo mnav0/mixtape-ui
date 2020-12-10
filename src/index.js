@@ -4,10 +4,15 @@ import SongList from './song-list/song-list'
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import UserContext from './user';
+import Playlists from './playlists'
 
 ReactDOM.render(
   <React.StrictMode>
-    <SongList />
+    <UserContext.Provider value={'Hannah!'}>
+      <SongList />
+      <Playlists />
+    </UserContext.Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
