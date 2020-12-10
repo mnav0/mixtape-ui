@@ -8,10 +8,20 @@ export const findAllArtists = () =>
 
 export const findUserForArtist = (id) =>
     fetch(`${FIND_USER_BY_ID}/${id}`)
-        .then(response => response.json())
+        .then(response => {
+            return response.text()
+        })
+        .then((data) => {
+            return data ? JSON.parse(data) : {}
+        })
 
 export const findSocialMediaForArtist = (id) =>
     fetch(`${FIND_SOCIAL_MEDIA_BY_ARTIST}/${id}`)
-        .then(response => response.json())
+        .then(response => {
+            return response.text()
+        })
+        .then((data) => {
+            return data ? JSON.parse(data) : {}
+        })
 
-export default {findAllArtists, findUserForArtist, findSocialMediaForArtist}
+export default { findAllArtists, findUserForArtist, findSocialMediaForArtist}

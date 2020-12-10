@@ -5,8 +5,8 @@ import UserContext from "../user";
 import songService from "../services/song-service";
 
 const ArtistList = () => {
-  const [artists, setArtists] = useState("");
-  const [artistLoading, setArtistLoading] = useState(true);
+  const [artistList, setArtistList] = useState("");
+  const [artistListLoading, setArtistListLoading] = useState(true);
   const [socialMediaLoading, setSocialMediaLoading] = useState(true);
   const [userLoading, setUserLoading] = useState(true);
 
@@ -15,41 +15,48 @@ const ArtistList = () => {
   useEffect(() => {
     artistService
       .findAllArtists()
-      .then((artists) => {
-        artists.map((artist, i) => {
+      .then((artistList) => {
+        artistList.map((artist) => {
           artistService
             .findSocialMediaForArtist(artist.userId)
-            .then((response) => (artist.socialMedia = response))
+            .then((response) => {
+              (artist.socialMedia = response)
+            })
             .finally(() => setSocialMediaLoading(false));
         });
-        artists.map((artist, i) => {
+        artistList.map((artist) => {
           artistService
             .findUserForArtist(artist.userId)
-            .then((response) => (artist.user = response))
+            .then((response) => {
+              (artist.user = response)})
             .finally(() => setUserLoading(false));
         });
-        setArtists(artists);
+        setArtistList(artistList);
       })
-      .finally(() => setArtistLoading(false));
+      .finally(() => {
+        setArtistListLoading(false)
+      });
   }, []);
 
-  return artistLoading || socialMediaLoading ? (
-    <div>Loading...</div>
-  ) : (
+  console.log("social media: ", socialMediaLoading, "user: ", userLoading, "artist: ", artistListLoading)
+
+  return (
+    <div>
+      {(artistListLoading) ? (
+        <div>
+        <h1>artist loading true</h1>
+        </div>
+      ) : (
     <div className="container-fluid">
-      <a href="../../index.html">Home</a>
+      {/* <a href="../../index.html">Home</a> */}
       <h1>Artists</h1>
-      {console.log(artists)}
-      {/* {artists.map((artist) => (
+      {artistList ? artistList.map((artist) => (
         <table>
           <tbody>
-          <td>
-                  {artist.user.firstName} {artist.user.lastName}
-                </td>
             <tr key={artist.userId}>
               {artist.user ? (
                 <td>
-                  {artist.user.firstName} {artist.user.lastName}
+                  {artist.user.firstName ? artist.user.firstName : null} {artist.user.lastName ? artist.user.lastName : null}
                 </td>
               ) : (
                 <td></td>
@@ -57,7 +64,7 @@ const ArtistList = () => {
             </tr>
           </tbody>
         </table>
-      ))} */}
+      )) : <div></div>}
       {/* <table>
         <tbody>
           {artists.map((artist) => (
@@ -79,6 +86,8 @@ const ArtistList = () => {
           ))}
         </tbody>
       </table> */}
+      </div>
+     )}
     </div>
   );
 };

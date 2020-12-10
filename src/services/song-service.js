@@ -5,9 +5,14 @@ const DELETE_SONG_URL = "http://localhost:8080/deleteSong"
 const ADD_SONG_TO_PLAYLIST = "http://localhost:8080/addSongToPlaylist"
 const FIND_SONG_ARTISTS = "http://localhost:8080/findArtistsBySong"
 const FIND_SONG_GENRES = "http://localhost:8080/findGenresBySong"
+const GET_SONGS_INFO = "http://localhost:8080/getSongsInformation"
 
 export const findAllSongs = () =>
     fetch(`${FIND_ALL_SONGS}`)
+    .then(response => response.json())
+
+export const getSongsInfo = () =>
+    fetch(`${GET_SONGS_INFO}`)
     .then(response => response.json())
 
 export const findSongById = (id) =>
@@ -38,4 +43,4 @@ export const findSongGenres = (id) =>
             return data ? JSON.parse(data) : {}
         })
 
-export default { findAllSongs, findSongById, createSong, deleteSong, addSongToPlaylist, findSongArtists, findSongGenres }
+export default { findAllSongs, getSongsInfo, findSongById, createSong, deleteSong, addSongToPlaylist, findSongArtists, findSongGenres }
