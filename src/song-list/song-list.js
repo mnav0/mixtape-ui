@@ -19,12 +19,13 @@ const SongList = () => {
           songService
             .findSongArtists(song.id)
             .then(response => (song.artists = response))
-            .finally(() => setArtistLoading(false));
+            .finally(() => setArtistLoading(false))})
+        songs.map((song, i) => {
           songService
             .findSongGenres(song.id)
             .then(response => (song.genres = response))
-            .finally(() => setGenreLoading(false));
-        });
+            .finally(() => setGenreLoading(false))
+          })
         setSongs(songs);
       })
       .finally(() => setSongLoading(false));
@@ -34,7 +35,7 @@ const SongList = () => {
 
   return (
     <div>
-      {songLoading || artistLoading ? (
+      {(songLoading || artistLoading) ? (
         <div>
         <h1>song loading true</h1>
         <p>{username}</p>
@@ -48,6 +49,8 @@ const SongList = () => {
               {songs.map(song => (
                 <tr key={song.id}>
                   <td>{song.name}</td>
+                  {console.log(song.artists)}
+                  {console.log(artistLoading)}
                   { song.artists ?
                             <td>{song.artists.map((artist) =>
                               <p key={artist.id}>{artist.firstName} {artist.lastName}</p>
