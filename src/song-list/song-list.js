@@ -11,12 +11,6 @@ const SongList = () => {
 
   const username = React.useContext(UserContext)
 
-  // getContext = () => {
-  //   const context = React.useContext(UserContext)
-  // }
-
-  // this.getContext()
-
   useEffect(() => {
     songService
       .findAllSongs()
@@ -33,14 +27,14 @@ const SongList = () => {
         });
         setSongs(songs);
       })
-      // .finally(() => setSongLoading(false));
+      .finally(() => setSongLoading(false));
   }, []);
 
   console.log(songs)
 
   return (
     <div>
-      {songLoading ? (
+      {songLoading || artistLoading ? (
         <div>
         <h1>song loading true</h1>
         <p>{username}</p>
