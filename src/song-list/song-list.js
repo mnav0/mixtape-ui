@@ -6,8 +6,6 @@ import UserContext from "../user";
 const SongList = () => {
   const [songInfo, setSongInfo] = useState("");
   const [songLoading, setSongLoading] = useState(true);
-  const [artistLoading, setArtistLoading] = useState(true);
-  const [genreLoading, setGenreLoading] = useState(true);
 
   const username = React.useContext(UserContext);
 
@@ -21,34 +19,45 @@ const SongList = () => {
   console.log(songInfo);
 
   return (
-    <div>
+    <div className="container align-items-left">
+    <a href="..">Home</a>
+      <h2>Songs</h2>
       {songLoading ? (
         <h1>Loading...</h1>
       ) : (
-        <div className="container-fluid">
-          <a href="../../index.html">Home</a>
-          <h1>Songs</h1>
-          <table>
-            <tbody>
-              {songInfo.map(song => (
-                <tr key={song.song.id}>
+        <>
+        <table className="table my-4">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Artists</th>
+              <th scope="col">Duration (s)</th>
+              <th scope="col">Genres</th>
+            </tr>
+          </thead>
+          <tbody>
+            {songInfo.map((song, i) => {
+                console.log(song)
+              return (
+                <tr key={i}>
                   <td>{song.song.name}</td>
                   <td>
                     {song.artistNames.map(artist => (
                       <p key={artist}>{artist}</p>
                     ))}
                   </td>
-                  <td>{song.song.duration && song.song.duration}</td>
+                  <td>{song.song.duration}</td>
                   <td>
                     {song.genreNames.map(genre => (
                       <p key={genre}>{genre}</p>
                     ))}
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              );
+            })}
+          </tbody>
+        </table>
+      </>
       )}
     </div>
     

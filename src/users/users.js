@@ -37,7 +37,8 @@ const Users = () => {
 
   return (
     <div className="container align-items-left">
-      <h1>This is users</h1>
+      <a href="..">Home</a>
+      <h1>Users</h1>
       {userLoading ? (
         <h2>loading ...</h2>
       ) : (
