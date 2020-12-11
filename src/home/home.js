@@ -16,6 +16,9 @@ const Home = () => {
         <div>
             <Link to="/playlists">Playlists</Link>
         </div>
+        <div>
+            <Link to="/users">Users</Link>
+        </div>
     </div>
   );
 }
