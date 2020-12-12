@@ -4,12 +4,13 @@ import logo from "./logo.svg";
 import UserContext from "./user";
 import SongList from "./song-list/song-list";
 import ArtistList from "./artist-list/artist-list";
-import Playlists from "./playlists";
+import Playlists from "./playlists/playlists";
 import Home from "./home/home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Users from "./users/users";
 import Profile from "./profile/profile";
 import SongDetails from './song-details/song-details'
+import PlaylistDetails from './playlist-details/playlist-details'
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/users" exact component={Users} />
           <Route path="/profile/:id" exact component={Profile} />
           <Route path="/song/:id" exact component={SongDetails} />
+          <Route path="/playlist/:id" exact component={PlaylistDetails} />
         </UserContext.Provider>
       </Switch>
     </div>
