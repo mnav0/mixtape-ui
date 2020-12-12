@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import artistService from "../services/artist-service";
 import listenerService from "../services/listener-service";
 import userService from "../services/user-service";
-import UserForm from "../user-form/userForm";
+import UserForm from "../user-form/user-form";
+import { PageHeader, TableHeader, TableLink, TableBody } from "../styled-table";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -38,18 +39,18 @@ const Users = () => {
   return (
     <div className="container align-items-left">
       <a href="..">Home</a>
-      <h1>Users</h1>
+      <PageHeader>Users</PageHeader>
       {userLoading ? (
-        <h2>loading ...</h2>
+        <TableBody>Loading ...</TableBody>
       ) : (
         <>
           <table className="table my-4">
             <thead>
               <tr>
-                <th scope="col">First Name</th>
-                <th scope="col">Last Name</th>
-                <th scope="col">Username</th>
-                <th scope="col">Birthday</th>
+                <TableHeader scope="col">FIRST NAME</TableHeader>
+                <TableHeader scope="col">LAST NAME</TableHeader>
+                <TableHeader scope="col">USERNAME</TableHeader>
+                <TableHeader scope="col">BIRTHDAY</TableHeader>
               </tr>
             </thead>
             <tbody>
@@ -57,10 +58,10 @@ const Users = () => {
                   console.log(user)
                 return (
                   <tr key={i}>
-                    <td>{user.firstName}</td>
-                    <td>{user.lastName}</td>
-                    <td><Link to={`/profile/${user.id}`}>{user.username}</Link></td>
-                    <td>{user.dob}</td>
+                    <td><TableBody>{user.firstName}</TableBody></td>
+                    <td><TableBody>{user.lastName}</TableBody></td>
+                    <td><TableLink to={`/profile/${user.id}`}>{user.username}</TableLink></td>
+                    <td><TableBody>{user.dob}</TableBody></td>
                   </tr>
                 );
               })}

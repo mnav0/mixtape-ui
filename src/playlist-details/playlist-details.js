@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import playlistService from "../services/playlist-service";
 import userService from "../services/user-service";
+import { ButtonBody } from '../styled-form';
+import { PageHeader, TableHeader, TableLink, TableBody } from "../styled-table";
 
 const PlaylistDetails = ({ ...props }) => {
   const [playlist, setPlaylist] = useState({});
@@ -15,17 +17,6 @@ const PlaylistDetails = ({ ...props }) => {
   const playlistId = props.match.params.id;
 
   const history = useHistory();
-
-  //   const getType = () => {
-  //     artistService.findAllArtists().then(response => {
-  //       console.log(response);
-  //       {
-  //         response.map(
-  //           (artist, i) => artist.userId == userId && setIsArtist(true)
-  //         );
-  //       }
-  //     });
-  //   };
 
   useEffect(() => {
     playlistService
@@ -74,7 +65,6 @@ const PlaylistDetails = ({ ...props }) => {
               <div>
                 <h3>{playlist.name}</h3>
                 {isEditing ? (
-                  //   <UserForm currUser={user} isEditing={true} />
                   <div>editing</div>
                 ) : (
                   <>
@@ -88,13 +78,17 @@ const PlaylistDetails = ({ ...props }) => {
                 {!isEditing && (
                   <>
                     <button className="btn btn-warning" onClick={() => edit()}>
-                      edit
+                      <ButtonBody>
+                      EDIT
+                      </ButtonBody>
                     </button>
                     <button
                       className="btn btn-danger"
                       onClick={() => deletePlaylist()}
                     >
-                      delete
+                      <ButtonBody>
+                      DELETE
+                      </ButtonBody>
                     </button>
                   </>
                 )}
@@ -102,14 +96,14 @@ const PlaylistDetails = ({ ...props }) => {
                   <div>loading...</div>
                 ) : (
                   <div>
-                      <h3>Songs</h3>
+                      <PageHeader>Songs in {playlist.name}</PageHeader>
                     <table className="table my-4">
                       <thead>
                         <tr>
-                          <th scope="col">Name</th>
-                          <th scope="col">Artists</th>
-                          <th scope="col">Duration (s)</th>
-                          <th scope="col">Genres</th>
+                          <TableHeader scope="col">NAME</TableHeader>
+                          <TableHeader scope="col">ARTISTS</TableHeader>
+                          <TableHeader scope="col">DURATION (S)</TableHeader>
+                          <TableHeader scope="col">GENRES</TableHeader>
                         </tr>
                       </thead>
                       <tbody>
@@ -117,21 +111,21 @@ const PlaylistDetails = ({ ...props }) => {
                           return (
                             <tr key={i}>
                               <td>
-                                <Link to={`/song/${song.song.id}`}>
+                                <TableLink to={`/song/${song.song.id}`}>
                                   {song.song.name}
-                                </Link>
+                                </TableLink>
                               </td>
                               <td>
                                 {song.artistNames.map((artist, key) => (
                                   <div key={key}>
-                                    <p>{artist}</p>
+                                    <TableBody>{artist}</TableBody>
                                   </div>
                                 ))}
                               </td>
-                              <td>{song.song.duration}</td>
+                              <td><TableBody>{song.song.duration}</TableBody></td>
                               <td>
                                 {song.genreNames.map((genre, index) => (
-                                  <p key={index}>{genre}</p>
+                                  <TableBody key={index}>{genre}</TableBody>
                                 ))}
                               </td>
                             </tr>
@@ -142,15 +136,6 @@ const PlaylistDetails = ({ ...props }) => {
                   </div>
                 )}
               </div>
-              {/* {isArtist ? (
-                <SongForm
-                  currSong={{ name: "", duration: "" }}
-                  isEditing={false}
-                  artistId={userId}
-                />
-              ) : (
-                <></>
-              )} */}
             </>
           )}
         </>

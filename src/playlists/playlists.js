@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import playlistService from "../services/playlist-service";
 import userService from '../services/user-service';
-// import UserForm from "../user-form/userForm";
+import { PageHeader, TableHeader, TableLink, TableBody } from "../styled-table";
 
 const Playlists = () => {
   const [playlists, setPlaylists] = useState([]);
@@ -19,24 +19,24 @@ const Playlists = () => {
   return (
     <div className="container align-items-left">
       <a href="..">Home</a>
-      <h1>Playlists</h1>
+      <PageHeader>Playlists</PageHeader>
       {playlistLoading ? (
-        <h2>loading ...</h2>
+        <TableHeader>Loading ...</TableHeader>
       ) : (
         <>
           <table className="table my-4">
             <thead>
               <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Date Created</th>
+                <TableHeader scope="col">NAME</TableHeader>
+                <TableHeader scope="col">DATE CREATED</TableHeader>
               </tr>
             </thead>
             <tbody>
               {playlists.map((playlist, i) => {
                 return (
                   <tr key={i}>
-                    <td><Link to={`/playlist/${playlist.id}`}>{playlist.name}</Link></td>
-                    <td>{playlist.createdAt}</td>
+                    <td><TableLink to={`/playlist/${playlist.id}`}>{playlist.name}</TableLink></td>
+                    <td><TableBody>{playlist.createdAt}</TableBody></td>
                   </tr>
                 );
               })}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import artistService from "../services/artist-service";
 import UserContext from "../user";
 import { Link } from "react-router-dom";
-
+import { PageHeader, TableHeader, TableLink, TableBody } from "../styled-table";
 
 const ArtistList = () => {
   const [artistInfo, setArtistInfo] = useState("");
@@ -20,19 +20,19 @@ const ArtistList = () => {
   return (
     <div className="container align-items-left">
         <a href="..">Home</a>
-        <h2> Artists </h2>
+        <PageHeader>Artists</PageHeader>
       {(artistListLoading) ? (
         <div>
-        <h2>Loading ...</h2>
+        <TableBody>Loading ...</TableBody>
         </div>
       ) : (
         <>
         <table className="table my-4">
           <thead>
             <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Bio</th>
-              <th scope="col">Social Media Links</th>
+              <TableHeader scope="col">NAME</TableHeader>
+              <TableHeader scope="col">BIO</TableHeader>
+              <TableHeader scope="col">SOCIAL MEDIA LINKS</TableHeader>
             </tr>
           </thead>
           <tbody>
@@ -40,11 +40,11 @@ const ArtistList = () => {
                 console.log(artist)
               return (
                 <tr key={i}>
-                  <td><Link to={`/profile/${artist.artist.userId}`}> {artist.name} </Link></td>
-                  <td>{artist.artist.bio}</td>
+                  <td><TableLink to={`/profile/${artist.artist.userId}`}> {artist.name} </TableLink></td>
+                  <td><TableBody>{artist.artist.bio}</TableBody></td>
                   <td>
                     {artist.artist.socialMedias.map(socialMedia => (
-                      <p key={socialMedia.id}>{socialMedia.url}</p>
+                      <TableBody key={socialMedia.id}>{socialMedia.url}</TableBody>
                     ))}
                   </td>
                 </tr>

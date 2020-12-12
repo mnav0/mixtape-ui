@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import songService from "../services/song-service";
 import SongForm from "../song-form/song-form";
+import { ButtonBody } from '../styled-form'
 
 const SongDetails = ({ ...props }) => {
   const [song, setSong] = useState({});
@@ -61,13 +62,17 @@ const SongDetails = ({ ...props }) => {
                 {!isEditing && (
                   <>
                     <button className="btn btn-warning" onClick={() => edit()}>
-                      edit
+                    <ButtonBody>
+                      EDIT
+                      </ButtonBody>
                     </button>
                     <button
                       className="btn btn-danger"
                       onClick={() => deleteSong()}
                     >
-                      delete
+                      <ButtonBody>
+                      DELETE
+                      </ButtonBody>
                     </button>
                   </>
                 )}

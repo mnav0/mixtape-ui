@@ -1,8 +1,26 @@
+@font-face {
+  font-family: 'Gatwick';
+  src: url(Gatwick-Variable.ttf) format('truetype');
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Hatton Bold';
+  src: url(Hatton-Bold.otf) format('opentype');
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Telegraf';
+  src: url(Telegraf-Regular.otf) format('opentype');
+  font-style: normal;
+  font-weight: 400;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import artistService from "../services/artist-service";
 import listenerService from "../services/listener-service";
 import userService from "../services/user-service";
+import { FormLabel, ButtonBody } from '../styled-form';
 
 const UserForm = ({currUser, isEditing}) => {
 
@@ -42,7 +43,7 @@ const UserForm = ({currUser, isEditing}) => {
     return (
         <form className="my-4">
         <div className="form-group">
-          <label htmlFor="firstName">First Name</label>
+          <FormLabel htmlFor="firstName">FIRST NAME</FormLabel>
           <input
             value={newFirstName}
             onChange={(event) => setNewFirstName(event.target.value)}
@@ -52,7 +53,7 @@ const UserForm = ({currUser, isEditing}) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="lastName">Last Name</label>
+          <FormLabel htmlFor="lastName">LAST NAME</FormLabel>
           <input
             value={newLastName}
             onChange={(event) => setNewLastName(event.target.value)}
@@ -62,7 +63,7 @@ const UserForm = ({currUser, isEditing}) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="username">Username</label>
+          <FormLabel htmlFor="username">USERNAME</FormLabel>
           <input
             value={newUsername}
             onChange={(event) => setNewUsername(event.target.value)}
@@ -72,7 +73,7 @@ const UserForm = ({currUser, isEditing}) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password</label>
+          <FormLabel htmlFor="password">PASSWORD</FormLabel>
           <input
             value={newPassword}
             onChange={(event) => setNewPassword(event.target.value)}
@@ -83,12 +84,12 @@ const UserForm = ({currUser, isEditing}) => {
         </div>
         {isEditing ? (
             <button onClick={() => update()} className="btn btn-success">
-                UPDATE
+               <ButtonBody>UPDATE</ButtonBody>
             </button>
         )
         : (
         <button onClick={() => createUser()} className="btn btn-success">
-          <p className="p-2 mb-0">CREATE USER</p>
+          <ButtonBody>CREATE USER</ButtonBody>
         </button>
         )}
       </form>

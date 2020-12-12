@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import ReactDOM from "react-dom";
 import songService from "../services/song-service";
 import UserContext from "../user";
+import { PageHeader, TableHeader, TableLink, TableBody } from "../styled-table";
 
 const SongList = () => {
   const [songInfo, setSongInfo] = useState("");
@@ -20,36 +21,49 @@ const SongList = () => {
   return (
     <div className="container align-items-left">
       <a href="..">Home</a>
-      <h2>Songs</h2>
+      <PageHeader>Songs</PageHeader>
       {songLoading ? (
-        <h1>Loading...</h1>
+        <TableHeader>Loading...</TableHeader>
       ) : (
         <>
           <table className="table my-4">
             <thead>
               <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Artists</th>
-                <th scope="col">Duration (s)</th>
-                <th scope="col">Genres</th>
+                <TableHeader scope="col">TITLE</TableHeader>
+                <TableHeader scope="col">ARTISTS</TableHeader>
+                <TableHeader scope="col">DURATION (s)</TableHeader>
+                <TableHeader scope="col">GENRES</TableHeader>
               </tr>
             </thead>
             <tbody>
               {songInfo.map((song, i) => {
                 return (
                   <tr key={i}>
-                    <td><Link to={`/song/${song.song.id}`}>{song.song.name}</Link></td>
+                    <td>
+                      <TableLink to={`/song/${song.song.id}`}>
+                        {song.song.name}
+                      </TableLink>
+                    </td>
                     <td>
                       {song.artistNames.map((artist, key) => (
                         <div key={key}>
-                          <p>{artist}</p>
+                          <TableBody>{artist}</TableBody>
                         </div>
                       ))}
                     </td>
-                    <td>{song.song.duration}</td>
+                    <td>
+                      <TableBody>
+                        {Math.floor(song.song.duration / 60)}:
+                        {(
+                          song.song.duration -
+                          Math.floor(song.song.duration / 60) * 60 +
+                          "00"
+                        ).slice(0, 2)}
+                      </TableBody>
+                    </td>
                     <td>
                       {song.genreNames.map((genre, index) => (
-                        <p key={index}>{genre}</p>
+                        <TableBody key={index}>{genre}</TableBody>
                       ))}
                     </td>
                   </tr>

@@ -6,7 +6,7 @@ import SongForm from '../song-form/song-form'
 
 const Home = () => {
   return (
-    <div>
+    <div class="container">
         <h1>Home</h1>
         <div>
             <Link to="/songs">Songs</Link>

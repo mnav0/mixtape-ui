@@ -3,8 +3,9 @@ import { Link, useHistory } from "react-router-dom";
 import artistService from "../services/artist-service";
 import listenerService from "../services/listener-service";
 import userService from "../services/user-service";
-import UserForm from "../user-form/userForm";
+import UserForm from "../user-form/user-form";
 import SongForm from "../song-form/song-form";
+import { ButtonBody } from '../styled-form';
 
 const Profile = ({ ...props }) => {
   const [user, setUser] = useState({});
@@ -77,13 +78,14 @@ const Profile = ({ ...props }) => {
                 {!isEditing && (
                   <>
                     <button className="btn btn-warning" onClick={() => edit()}>
-                      edit
+                    <ButtonBody>EDIT</ButtonBody>
                     </button>
                     <button
                       className="btn btn-danger"
                       onClick={() => deleteUser()}
-                    >
-                      delete
+                    ><ButtonBody>
+                      DELETE
+                      </ButtonBody>
                     </button>
                   </>
                 )}
