@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import UserContext from '../user'
 import { Link } from 'react-router-dom';
+import SongForm from '../song-form/song-form'
 
 const Home = () => {
   return (

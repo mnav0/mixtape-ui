@@ -1,11 +1,11 @@
 const FIND_ALL_SONGS  = "http://localhost:8080/findAllSongs"
 const FIND_SONG_BY_ID = "http://localhost:8080/findSongById"
-const CREATE_SONG_URL = "http://localhost:8080/createSong"
 const DELETE_SONG_URL = "http://localhost:8080/deleteSong"
 const ADD_SONG_TO_PLAYLIST = "http://localhost:8080/addSongToPlaylist"
 const FIND_SONG_ARTISTS = "http://localhost:8080/findArtistsBySong"
 const FIND_SONG_GENRES = "http://localhost:8080/findGenresBySong"
 const GET_SONGS_INFO = "http://localhost:8080/getSongsInformation"
+const URL = "http://localhost:8080"
 
 export const findAllSongs = () =>
     fetch(`${FIND_ALL_SONGS}`)
@@ -19,9 +19,27 @@ export const findSongById = (id) =>
     fetch(`${FIND_SONG_BY_ID}/${id}`)
     .then(response => response.json())
 
-export const createSong = (artistId, songName) =>
-    fetch(`${CREATE_SONG_URL}/${artistId}/${songName}`)
-    .then(response => response.json())
+export const createNewSong = (artistId, song) =>
+    fetch(`${URL}/${artistId}/createSong`, {
+      method: "POST",
+      body: JSON.stringify({
+        ...song
+      }),
+      headers: {
+        "content-type": "application/json",
+      },
+    }).then((response) => response.json());
+
+export const updateSong = (song, songId) =>
+  fetch(`${URL}/updateSong/${songId}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      ...song
+    }),
+    headers: {
+      "content-type": "application/json",
+    },
+  }).then((response) => response.json());
 
 export const deleteSong = (id) =>
     fetch(`${DELETE_SONG_URL}/${id}`)
@@ -43,4 +61,4 @@ export const findSongGenres = (id) =>
             return data ? JSON.parse(data) : {}
         })
 
-export default { findAllSongs, getSongsInfo, findSongById, createSong, deleteSong, addSongToPlaylist, findSongArtists, findSongGenres }
+export default { findAllSongs, updateSong, getSongsInfo, findSongById, createNewSong, deleteSong, addSongToPlaylist, findSongArtists, findSongGenres }

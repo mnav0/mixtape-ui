@@ -9,6 +9,7 @@ import Home from "./home/home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Users from "./users/users";
 import Profile from "./profile/profile";
+import SongDetails from './song-details/song-details'
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/artists" component={ArtistList} />
           <Route path="/users" exact component={Users} />
           <Route path="/profile/:id" exact component={Profile} />
+          <Route path="/song/:id" exact component={SongDetails} />
         </UserContext.Provider>
       </Switch>
     </div>

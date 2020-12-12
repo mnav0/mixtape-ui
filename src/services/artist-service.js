@@ -29,4 +29,4 @@ export const findSocialMediaForArtist = (id) =>
             return data ? JSON.parse(data) : {}
         })
 
-export default { findArtistInformation, findUserForArtist, findSocialMediaForArtist}
+export default { findAllArtists, findArtistInformation, findUserForArtist, findSocialMediaForArtist}

@@ -4,22 +4,38 @@ import artistService from "../services/artist-service";
 import listenerService from "../services/listener-service";
 import userService from "../services/user-service";
 import UserForm from "../user-form/userForm";
+import SongForm from "../song-form/song-form";
 
 const Profile = ({ ...props }) => {
   const [user, setUser] = useState({});
   const [userLoading, setUserLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isArtist, setIsArtist] = useState(false);
 
   const userId = props.match.params.id;
 
   const history = useHistory();
 
+  const getType = () => {
+    artistService.findAllArtists().then(response => {
+      console.log(response);
+      {
+        response.map(
+          (artist, i) => artist.userId == userId && setIsArtist(true)
+        );
+      }
+    });
+  };
+
   useEffect(() => {
     userService
       .findUserById(userId)
-      .then((response) => setUser(response))
-      .finally(() => setUserLoading(false));
+      .then(response => setUser(response))
+      .finally(() => {
+        getType();
+        setUserLoading(false);
+      });
   }, []);
 
   const edit = () => {
@@ -27,7 +43,7 @@ const Profile = ({ ...props }) => {
   };
 
   const deleteUser = () => {
-    userService.deleteUser(userId).then((response) => console.log(response));
+    userService.deleteUser(userId).then(response => console.log(response));
     setIsDeleted(true);
   };
 
@@ -72,6 +88,15 @@ const Profile = ({ ...props }) => {
                   </>
                 )}
               </div>
+              {isArtist ? (
+                <SongForm
+                  currSong={{ name: "", duration: "" }}
+                  isEditing={false}
+                  artistId={userId}
+                />
+              ) : (
+                <></>
+              )}
             </>
           )}
         </>
