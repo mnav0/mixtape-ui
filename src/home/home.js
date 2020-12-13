@@ -20,6 +20,9 @@ const Home = () => {
         <div>
             <Link to="/users">Users</Link>
         </div>
+        <div>
+            <Link to="/listeners">Listeners</Link>
+        </div>
     </div>
   );
 }

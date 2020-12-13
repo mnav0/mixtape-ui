@@ -31,7 +31,7 @@ const SongList = () => {
               <tr>
                 <TableHeader scope="col">TITLE</TableHeader>
                 <TableHeader scope="col">ARTISTS</TableHeader>
-                <TableHeader scope="col">DURATION (s)</TableHeader>
+                <TableHeader scope="col">DURATION</TableHeader>
                 <TableHeader scope="col">GENRES</TableHeader>
               </tr>
             </thead>

@@ -4,6 +4,7 @@ import playlistService from "../services/playlist-service";
 import userService from "../services/user-service";
 import { ButtonBody } from '../styled-form';
 import { PageHeader, TableHeader, TableLink, TableBody } from "../styled-table";
+import PlaylistForm from '../playlist-form/playlist-form';
 
 const PlaylistDetails = ({ ...props }) => {
   const [playlist, setPlaylist] = useState({});
@@ -50,7 +51,11 @@ const PlaylistDetails = ({ ...props }) => {
 
   return (
     <div className="container my-5">
-      {isDeleted ? (
+      {console.log(isEditing)}
+      {isEditing ? (
+        <PlaylistForm currPlaylist={playlist} editing={true}>,</PlaylistForm>
+      ) :
+      isDeleted ? (
         <>
           <h2>playlist has been deleted</h2>
           <Link to={"/playlists"}>Back to all playlists</Link>
@@ -139,7 +144,10 @@ const PlaylistDetails = ({ ...props }) => {
             </>
           )}
         </>
-      )}
+      )
+
+      }
+      
     </div>
   );
 };

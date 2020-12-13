@@ -11,6 +11,8 @@ import Users from "./users/users";
 import Profile from "./profile/profile";
 import SongDetails from './song-details/song-details'
 import PlaylistDetails from './playlist-details/playlist-details'
+import PlaylistForm from "./playlist-form/playlist-form";
+import ListenerList from "./listener-list/listener-list";
 
 const App = () => {
   return (
@@ -25,6 +27,8 @@ const App = () => {
           <Route path="/profile/:id" exact component={Profile} />
           <Route path="/song/:id" exact component={SongDetails} />
           <Route path="/playlist/:id" exact component={PlaylistDetails} />
+          <Route path="/playlist/edit/:id" exact component={PlaylistForm} />
+          <Route path="/listeners" component={ListenerList} />
         </UserContext.Provider>
       </Switch>
     </div>
