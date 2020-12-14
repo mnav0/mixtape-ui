@@ -4,7 +4,7 @@ import { StyledButton } from "./styled";
 const Button = ({ text, color }) => {
 
   return (
-    <StyledButton color={color}>
+    <StyledButton color={color} >
       <p>{text}</p>
     </StyledButton>
   );

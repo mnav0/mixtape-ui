@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import userService from "../services/user-service";
 import UserForm from "../user-form/user-form";
 import { PageHeader, TableHeader, TableLink, TableBody } from "../styled-table";
+import { LinkContainer } from '../styled-nav';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -17,8 +18,10 @@ const Users = () => {
 
   return (
     <div className="container align-items-left">
-      <a href=".." className="row">Home</a>
-      <Link to="/menu">Menu</Link>
+      <LinkContainer>
+        <Link to="/">HOME</Link>
+        <Link to="/menu">MENU</Link>
+      </LinkContainer>
       <PageHeader>Users</PageHeader>
       {userLoading ? (
         <TableBody>Loading ...</TableBody>

@@ -4,6 +4,7 @@ import playlistService from "../services/playlist-service";
 import userService from '../services/user-service';
 import PlaylistForm from '../playlist-form/playlist-form';
 import { PageHeader, TableHeader, TableLink, TableBody } from "../styled-table";
+import { LinkContainer } from '../styled-nav';
 
 const Playlists = () => {
   const [playlists, setPlaylists] = useState([]);
@@ -19,8 +20,10 @@ const Playlists = () => {
   console.log(playlists)
   return (
     <div className="container align-items-left">
-      <a href=".." className="row">Home</a>
-      <Link to="/menu">Menu</Link>
+      <LinkContainer>
+        <Link to="/">HOME</Link>
+        <Link to="/menu">MENU</Link>
+      </LinkContainer>
       <PageHeader>Playlists</PageHeader>
       {playlistLoading ? (
         <TableHeader>Loading ...</TableHeader>

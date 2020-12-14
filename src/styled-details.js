@@ -35,11 +35,17 @@ const ButtonContainer = styled.div`
    }
 `
 
+const Permissions = styled.div`
+   margin-top: 50px;
+   margin-bottom: 50px;
+`
+
 export {
     DetailsHeader,
     Name,
     DetailsLabel,
     DetailsBody,
-    ButtonContainer
+    ButtonContainer,
+    Permissions
 }
   

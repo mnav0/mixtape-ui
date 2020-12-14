@@ -2,6 +2,7 @@ const FIND_ALL_ARTISTS = "http://localhost:8080/findAllArtists"
 const FIND_USER_BY_ID = "http://localhost:8080/findUserById"
 const FIND_SOCIAL_MEDIA_BY_ARTIST = "http://localhost:8080/findSocialMediaByArtist"
 const FIND_ARTIST_INFORMATION = "http://localhost:8080/findArtistsInformation"
+const CREATE_ARTIST = "http://localhost:8080/createArtist"
 
 export const findArtistInformation = () =>
     fetch(`${FIND_ARTIST_INFORMATION}`)
@@ -29,4 +30,10 @@ export const findSocialMediaForArtist = (id) =>
             return data ? JSON.parse(data) : {}
         })
 
-export default { findAllArtists, findArtistInformation, findUserForArtist, findSocialMediaForArtist}
+export const createNewArtist = (id) =>
+    fetch(`${CREATE_ARTIST}/${id}`)
+        .then(response => {
+            return response.json()
+    })
+
+export default { findAllArtists, findArtistInformation, findUserForArtist, findSocialMediaForArtist, createNewArtist}

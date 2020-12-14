@@ -6,4 +6,10 @@ export const findAllListeners = () =>
 export const findListenerInformation = () =>
   fetch(`${URL}findListenerInformation`).then((response) => response.json());
 
-export default { findAllListeners, findListenerInformation };
+export const createNewListener = (id) =>
+  fetch(`${URL}/createListener/${id}`)
+      .then(response => {
+          return response.json()
+  })
+
+export default { findAllListeners, findListenerInformation, createNewListener };

@@ -1,13 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import artistService from "../services/artist-service";
 import listenerService from "../services/listener-service";
 import userService from "../services/user-service";
 import UserForm from "../user-form/user-form";
 import SongForm from "../song-form/song-form";
-import { DetailsHeader, Name, DetailsLabel, DetailsBody, ButtonContainer } from '../styled-details'
-import Button from '../button/button'
-import { TableLink } from '../styled-table'
+import UserContext from "../user";
+import {
+  DetailsHeader,
+  Name,
+  DetailsLabel,
+  DetailsBody,
+  ButtonContainer,
+  Permissions
+} from "../styled-details";
+import Button from "../button/button";
+import { TableLink } from "../styled-table";
+import { LinkContainer } from "../styled-nav";
 
 const Profile = ({ ...props }) => {
   const [user, setUser] = useState({});
@@ -18,7 +27,7 @@ const Profile = ({ ...props }) => {
 
   const userId = props.match.params.id;
 
-  const history = useHistory();
+  const userType = useContext(UserContext);
 
   const getType = () => {
     artistService.findAllArtists().then(response => {
@@ -52,7 +61,9 @@ const Profile = ({ ...props }) => {
 
   return (
     <div className="container my-5">
-      <Link to="/menu" className="row">Menu</Link>
+      <LinkContainer>
+        <Link to="/menu">MENU</Link>
+      </LinkContainer>
       {isDeleted ? (
         <>
           <Name>User has been deleted</Name>
@@ -73,41 +84,52 @@ const Profile = ({ ...props }) => {
                   <UserForm currUser={user} isEditing={true} />
                 ) : (
                   <>
-                  <div>
-                    <DetailsLabel>BIRTHDAY:</DetailsLabel> 
-                    <DetailsBody>{user.dob}</DetailsBody>
-                  </div>
-                  <div>
-                    <DetailsLabel>USERNAME:</DetailsLabel>
-                    <DetailsBody>{user.username}</DetailsBody>
-                  </div>
-                  <div>
-                    <DetailsLabel>PASSWORD:</DetailsLabel>
-                    <DetailsBody>{user.password}</DetailsBody>
-                  </div>
+                    <div>
+                      <DetailsLabel>BIRTHDAY:</DetailsLabel>
+                      <DetailsBody>{user.dob}</DetailsBody>
+                    </div>
+                    <div>
+                      <DetailsLabel>USERNAME:</DetailsLabel>
+                      <DetailsBody>{user.username}</DetailsBody>
+                    </div>
+                    <div>
+                      <DetailsLabel>PASSWORD:</DetailsLabel>
+                      <DetailsBody>{user.password}</DetailsBody>
+                    </div>
                   </>
                 )}
-                {!isEditing && (
-                  <>
-                  <ButtonContainer>
-                    <div onClick={() => edit()}>
-                      <Button color={'#E3DAFD'} text={'EDIT'} />
-                    </div>
-                    <div onClick={() => deleteUser()}>
-                      <Button text={'DELETE'} color={'#FDDADA'} />
-                    </div>
+                {(isArtist && userType == "artist") ||
+                (!isArtist && userType == "listener") ? (
+                  !isEditing && (
+                    <ButtonContainer>
+                      <div onClick={() => edit()}>
+                        <Button color={"#E3DAFD"} text={"EDIT"} />
+                      </div>
+                      <div onClick={() => deleteUser()}>
+                        <Button text={"DELETE"} color={"#FDDADA"} />
+                      </div>
                     </ButtonContainer>
-                  </>
+                  )
+                ) : (
+                  <Permissions>
+                    <div>
+                      <DetailsLabel>
+                        You do not have permission to edit this user
+                        {isArtist && " or add a song"}.
+                      </DetailsLabel>
+                    </div>
+                    <div>
+                      <TableLink to={"/users"}>Back to all users</TableLink>
+                    </div>
+                  </Permissions>
                 )}
               </div>
-              {isArtist ? (
+              {userType == "artist" && isArtist && (
                 <SongForm
                   currSong={{ name: "", duration: "" }}
                   isEditing={false}
                   artistId={userId}
                 />
-              ) : (
-                <></>
               )}
             </>
           )}

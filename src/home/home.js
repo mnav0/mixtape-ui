@@ -1,12 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import ReactDOM from "react-dom";
 import UserContext from '../user'
 import { Link } from 'react-router-dom';
-import { PageHeader } from '../styled-table';
-import Menu from '../menu/menu';
-import { EntryButton } from './styled'
-import { ButtonBody } from "../styled-form";
 import { WelcomeHeader } from '../styled-context-selector'
+import Button from '../button/button'
 
 const Home = () => {
   const userType = useContext(UserContext);
@@ -17,7 +14,7 @@ const Home = () => {
           <WelcomeHeader>Welcome back, {userType}!</WelcomeHeader>
       )}
         <Link to="/menu">
-            <EntryButton class="btn"><p>ENTER MIXTAPE</p></EntryButton>
+            <Button text={'ENTER MIXTAPE'} />
         </Link>
     </div>
   );

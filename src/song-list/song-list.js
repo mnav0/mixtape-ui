@@ -4,14 +4,13 @@ import ReactDOM from "react-dom";
 import songService from "../services/song-service";
 import UserContext from "../user";
 import { PageHeader, TableHeader, TableLink, TableBody } from "../styled-table";
+import { LinkContainer } from "../styled-nav";
 
 const SongList = () => {
   const [songInfo, setSongInfo] = useState("");
   const [songLoading, setSongLoading] = useState(true);
 
   const username = React.useContext(UserContext);
-
-  console.log("in songs: ", username)
 
   useEffect(() => {
     songService
@@ -22,8 +21,10 @@ const SongList = () => {
 
   return (
     <div className="container align-items-left">
-      <a href=".." className="row">Home</a>
-      <Link to="/menu">Menu</Link>
+      <LinkContainer>
+        <Link to="/">HOME</Link>
+        <Link to="/menu">MENU</Link>
+      </LinkContainer>
       <PageHeader>Songs</PageHeader>
       {songLoading ? (
         <TableBody>Loading...</TableBody>
@@ -34,7 +35,7 @@ const SongList = () => {
               <tr>
                 <TableHeader scope="col">TITLE</TableHeader>
                 <TableHeader scope="col">ARTISTS</TableHeader>
-                <TableHeader scope="col">DURATION</TableHeader>
+                <TableHeader scope="col">DURATION (s)</TableHeader>
                 <TableHeader scope="col">GENRES</TableHeader>
               </tr>
             </thead>
@@ -55,14 +56,7 @@ const SongList = () => {
                       ))}
                     </td>
                     <td>
-                      <TableBody>
-                        {Math.floor(song.song.duration / 60)}:
-                        {(
-                          song.song.duration -
-                          Math.floor(song.song.duration / 60) * 60 +
-                          "00"
-                        ).slice(0, 2)}
-                      </TableBody>
+                      <TableBody>{song.song.duration}</TableBody>
                     </td>
                     <td>
                       {song.genreNames.map((genre, index) => (

@@ -1,10 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import songService from "../services/song-service";
 import SongForm from "../song-form/song-form";
-import { DetailsHeader, Name, DetailsLabel, DetailsBody, ButtonContainer } from '../styled-details'
-import Button from '../button/button'
-import { TableLink } from '../styled-table'
+import {
+  DetailsHeader,
+  Name,
+  DetailsLabel,
+  DetailsBody,
+  ButtonContainer,
+  Permissions
+} from "../styled-details";
+import Button from "../button/button";
+import { TableLink } from "../styled-table";
+import UserContext from "../user";
+import { LinkContainer } from "../styled-nav";
 
 const SongDetails = ({ ...props }) => {
   const [song, setSong] = useState({});
@@ -14,7 +23,7 @@ const SongDetails = ({ ...props }) => {
 
   const songId = props.match.params.id;
 
-  const history = useHistory();
+  const userType = useContext(UserContext);
 
   useEffect(() => {
     songService
@@ -36,7 +45,11 @@ const SongDetails = ({ ...props }) => {
 
   return (
     <div className="container my-5">
-      <Link to="/menu" className="row">Menu</Link>
+      <LinkContainer>
+        <Link to="/menu">
+          MENU
+        </Link>
+      </LinkContainer>
       {isDeleted ? (
         <>
           <Name>Song has been deleted</Name>
@@ -50,31 +63,37 @@ const SongDetails = ({ ...props }) => {
           ) : (
             <>
               <div>
-                <Name>
-                  {song.name}
-                </Name>
+                <Name>{song.name}</Name>
                 {isEditing ? (
                   <SongForm currSong={song} isEditing={true} />
                 ) : (
                   <div>
-                    <DetailsLabel>DURATION:</DetailsLabel>
-                    <DetailsBody>{Math.floor(song.duration / 60)}:
-                        {(
-                          song.duration -
-                          Math.floor(song.duration / 60) * 60 +
-                          "00"
-                        ).slice(0, 2)}</DetailsBody>
+                    <DetailsLabel>DURATION (s):</DetailsLabel>
+                    <DetailsBody>{song.duration}</DetailsBody>
                   </div>
                 )}
-                {!isEditing && (
-                  <ButtonContainer>
-                    <div onClick={() => edit()}>
-                      <Button color={'#E3DAFD'} text={'EDIT'} />
+                {userType == "artist" ? (
+                  !isEditing && (
+                    <ButtonContainer>
+                      <div onClick={() => edit()}>
+                        <Button color={"#E3DAFD"} text={"EDIT"} />
+                      </div>
+                      <div onClick={() => deleteSong()}>
+                        <Button text={"DELETE"} color={"#FDDADA"} />
+                      </div>
+                    </ButtonContainer>
+                  )
+                ) : (
+                  <Permissions>
+                    <div>
+                      <DetailsLabel>
+                        You do not have permission to edit this song.
+                      </DetailsLabel>
                     </div>
-                    <div onClick={() => deleteSong()}>
-                      <Button text={'DELETE'} color={'#FDDADA'} />
+                    <div>
+                      <TableLink to={"/songs"}>Back to all songs</TableLink>
                     </div>
-                  </ButtonContainer>
+                  </Permissions>
                 )}
               </div>
             </>

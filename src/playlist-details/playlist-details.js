@@ -1,12 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import playlistService from "../services/playlist-service";
 import userService from "../services/user-service";
-import { ButtonBody } from '../styled-form';
+import { ButtonBody } from "../styled-form";
 import { PageHeader, TableHeader, TableLink, TableBody } from "../styled-table";
-import PlaylistForm from '../playlist-form/playlist-form';
-import { DetailsHeader, Name, DetailsLabel, DetailsBody, ButtonContainer } from '../styled-details';
-import Button from '../button/button';
+import PlaylistForm from "../playlist-form/playlist-form";
+import {
+  DetailsHeader,
+  Name,
+  DetailsLabel,
+  DetailsBody,
+  ButtonContainer,
+  Permissions
+} from "../styled-details";
+import Button from "../button/button";
+import UserContext from "../user";
+import { LinkContainer } from '../styled-nav'
 
 const PlaylistDetails = ({ ...props }) => {
   const [playlist, setPlaylist] = useState({});
@@ -19,7 +28,7 @@ const PlaylistDetails = ({ ...props }) => {
 
   const playlistId = props.match.params.id;
 
-  const history = useHistory();
+  const userType = useContext(UserContext);
 
   useEffect(() => {
     playlistService
@@ -53,18 +62,18 @@ const PlaylistDetails = ({ ...props }) => {
 
   return (
     <div className="container my-5">
-      {console.log(isEditing)}
       {isEditing ? (
-        <PlaylistForm currPlaylist={playlist} editing={true}>,</PlaylistForm>
-      ) :
-      isDeleted ? (
+        <PlaylistForm currPlaylist={playlist} editing={true} />
+      ) : isDeleted ? (
         <>
           <Name>playlist has been deleted</Name>
           <TableLink to={"/playlists"}>Back to all playlists</TableLink>
         </>
       ) : (
         <>
-        <Link to="/menu" className="row">Menu</Link>
+          <LinkContainer>
+            <Link to="/menu">MENU</Link>
+          </LinkContainer>
           <DetailsHeader>Playlist</DetailsHeader>
           {playlistLoading || userLoading ? (
             <DetailsLabel>Loading ...</DetailsLabel>
@@ -72,34 +81,48 @@ const PlaylistDetails = ({ ...props }) => {
             <>
               <div>
                 <Name>{playlist.name}</Name>
-                {!isEditing && 
-                (
+                {!isEditing && (
                   <>
-                  <div>
-                    <DetailsLabel>CREATED BY:</DetailsLabel>
-                    <DetailsBody>{playlist.user.firstName}{" "}{playlist.user.lastName}</DetailsBody>
-                  </div>
-                  <div>
-                    <DetailsLabel>CREATED AT:</DetailsLabel>
-                    <DetailsBody>{playlist.createdAt}</DetailsBody>
-                  </div>
+                    <div>
+                      <DetailsLabel>CREATED BY:</DetailsLabel>
+                      <DetailsBody>
+                        {playlist.user.firstName} {playlist.user.lastName}
+                      </DetailsBody>
+                    </div>
+                    <div>
+                      <DetailsLabel>CREATED AT:</DetailsLabel>
+                      <DetailsBody>{playlist.createdAt}</DetailsBody>
+                    </div>
                   </>
                 )}
-                {!isEditing && (
-                  <ButtonContainer>
+                {userType == "listener" ? (
+                  !isEditing && (
+                    <ButtonContainer>
                       <div onClick={() => edit()}>
-                        <Button color={'#E3DAFD'} text={'EDIT'} />
+                        <Button color={"#C9E4FF"} text={"EDIT"} />
                       </div>
                       <div onClick={() => deletePlaylist()}>
-                        <Button text={'DELETE'} color={'#FDDADA'} />
+                        <Button text={"DELETE"} color={"#FDDADA"} />
                       </div>
                     </ButtonContainer>
+                  )
+                ) : (
+                  <Permissions>
+                    <div>
+                      <DetailsLabel>
+                        You do not have permission to edit this playlist.
+                      </DetailsLabel>
+                    </div>
+                    <div>
+                      <TableLink to={"/playlists"}>Back to all playlists</TableLink>
+                    </div>
+                  </Permissions>
                 )}
                 {songLoading ? (
                   <DetailsLabel>Loading...</DetailsLabel>
                 ) : (
                   <div>
-                      <PageHeader>Songs in {playlist.name}</PageHeader>
+                    <PageHeader>Songs in {playlist.name}</PageHeader>
                     <table className="table my-4">
                       <thead>
                         <tr>
@@ -125,7 +148,9 @@ const PlaylistDetails = ({ ...props }) => {
                                   </div>
                                 ))}
                               </td>
-                              <td><TableBody>{song.song.duration}</TableBody></td>
+                              <td>
+                                <TableBody>{song.song.duration}</TableBody>
+                              </td>
                               <td>
                                 {song.genreNames.map((genre, index) => (
                                   <TableBody key={index}>{genre}</TableBody>
@@ -142,10 +167,7 @@ const PlaylistDetails = ({ ...props }) => {
             </>
           )}
         </>
-      )
-
-      }
-      
+      )}
     </div>
   );
 };

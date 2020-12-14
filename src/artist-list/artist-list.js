@@ -3,6 +3,7 @@ import artistService from "../services/artist-service";
 import UserContext from "../user";
 import { Link } from "react-router-dom";
 import { PageHeader, TableHeader, TableLink, TableBody } from "../styled-table";
+import { LinkContainer } from '../styled-nav';
 
 const ArtistList = () => {
   const [artistInfo, setArtistInfo] = useState("");
@@ -19,8 +20,10 @@ const ArtistList = () => {
 
   return (
     <div className="container align-items-left">
-       <a href=".." className="row">Home</a>
-      <Link to="/menu">Menu</Link>
+       <LinkContainer>
+        <Link to="/">HOME</Link>
+        <Link to="/menu">MENU</Link>
+      </LinkContainer>
         <PageHeader>Artists</PageHeader>
       {(artistListLoading) ? (
         <div>
