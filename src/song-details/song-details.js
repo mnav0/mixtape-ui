@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import songService from "../services/song-service";
 import SongForm from "../song-form/song-form";
-import { ButtonBody } from '../styled-form'
+import { DetailsHeader, Name, DetailsLabel, DetailsBody, ButtonContainer } from '../styled-details'
+import Button from '../button/button'
+import { TableLink } from '../styled-table'
 
 const SongDetails = ({ ...props }) => {
   const [song, setSong] = useState({});
@@ -34,47 +36,45 @@ const SongDetails = ({ ...props }) => {
 
   return (
     <div className="container my-5">
+      <Link to="/menu" className="row">Menu</Link>
       {isDeleted ? (
         <>
-          <h2>Song has been deleted</h2>
-          <Link to={"/songs"}>Back to all songs</Link>
+          <Name>Song has been deleted</Name>
+          <TableLink to={"/songs"}>Back to all songs</TableLink>
         </>
       ) : (
         <>
-          <h1>Song Details</h1>
+          <DetailsHeader>Song Details</DetailsHeader>
           {songLoading ? (
-            <h2>loading ...</h2>
+            <DetailsLabel>Loading ...</DetailsLabel>
           ) : (
             <>
               <div>
-                <h3>
+                <Name>
                   {song.name}
-                </h3>
+                </Name>
                 {isEditing ? (
                   <SongForm currSong={song} isEditing={true} />
                 ) : (
-                  <>
-                    <p>Artists: {}</p>
-                    <p>Duration: {song.duration}</p>
-                    <p>Genres: {}</p>
-                  </>
+                  <div>
+                    <DetailsLabel>DURATION:</DetailsLabel>
+                    <DetailsBody>{Math.floor(song.duration / 60)}:
+                        {(
+                          song.duration -
+                          Math.floor(song.duration / 60) * 60 +
+                          "00"
+                        ).slice(0, 2)}</DetailsBody>
+                  </div>
                 )}
                 {!isEditing && (
-                  <>
-                    <button className="btn btn-warning" onClick={() => edit()}>
-                    <ButtonBody>
-                      EDIT
-                      </ButtonBody>
-                    </button>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => deleteSong()}
-                    >
-                      <ButtonBody>
-                      DELETE
-                      </ButtonBody>
-                    </button>
-                  </>
+                  <ButtonContainer>
+                    <div onClick={() => edit()}>
+                      <Button color={'#E3DAFD'} text={'EDIT'} />
+                    </div>
+                    <div onClick={() => deleteSong()}>
+                      <Button text={'DELETE'} color={'#FDDADA'} />
+                    </div>
+                  </ButtonContainer>
                 )}
               </div>
             </>

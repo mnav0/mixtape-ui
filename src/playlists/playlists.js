@@ -19,7 +19,8 @@ const Playlists = () => {
   console.log(playlists)
   return (
     <div className="container align-items-left">
-      <a href="..">Home</a>
+      <a href=".." className="row">Home</a>
+      <Link to="/menu">Menu</Link>
       <PageHeader>Playlists</PageHeader>
       {playlistLoading ? (
         <TableHeader>Loading ...</TableHeader>

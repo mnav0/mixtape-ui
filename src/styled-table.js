@@ -18,9 +18,9 @@ const TableLink = styled(Link)`
   font-family: 'Gatwick';
   font-weight: 600;
   text-decoration: none;
-  color: ${colors.darkBlue};
+  color: ${colors.blue};
   &:hover {
-    color: ${colors.blue};
+    color: ${colors.darkBlue};
     text-decoration: none;
   }
 `

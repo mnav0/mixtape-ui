@@ -5,6 +5,8 @@ import userService from "../services/user-service";
 import { ButtonBody } from '../styled-form';
 import { PageHeader, TableHeader, TableLink, TableBody } from "../styled-table";
 import PlaylistForm from '../playlist-form/playlist-form';
+import { DetailsHeader, Name, DetailsLabel, DetailsBody, ButtonContainer } from '../styled-details';
+import Button from '../button/button';
 
 const PlaylistDetails = ({ ...props }) => {
   const [playlist, setPlaylist] = useState({});
@@ -57,48 +59,44 @@ const PlaylistDetails = ({ ...props }) => {
       ) :
       isDeleted ? (
         <>
-          <h2>playlist has been deleted</h2>
-          <Link to={"/playlists"}>Back to all playlists</Link>
+          <Name>playlist has been deleted</Name>
+          <TableLink to={"/playlists"}>Back to all playlists</TableLink>
         </>
       ) : (
         <>
-          <h1>Playlist</h1>
+        <Link to="/menu" className="row">Menu</Link>
+          <DetailsHeader>Playlist</DetailsHeader>
           {playlistLoading || userLoading ? (
-            <h2>loading ...</h2>
+            <DetailsLabel>Loading ...</DetailsLabel>
           ) : (
             <>
               <div>
-                <h3>{playlist.name}</h3>
-                {isEditing ? (
-                  <div>editing</div>
-                ) : (
+                <Name>{playlist.name}</Name>
+                {!isEditing && 
+                (
                   <>
-                    <p>
-                      Created by: {playlist.user.firstName}{" "}
-                      {playlist.user.lastName}
-                    </p>
-                    <p>Created at: {playlist.createdAt}</p>
+                  <div>
+                    <DetailsLabel>CREATED BY:</DetailsLabel>
+                    <DetailsBody>{playlist.user.firstName}{" "}{playlist.user.lastName}</DetailsBody>
+                  </div>
+                  <div>
+                    <DetailsLabel>CREATED AT:</DetailsLabel>
+                    <DetailsBody>{playlist.createdAt}</DetailsBody>
+                  </div>
                   </>
                 )}
                 {!isEditing && (
-                  <>
-                    <button className="btn btn-warning" onClick={() => edit()}>
-                      <ButtonBody>
-                      EDIT
-                      </ButtonBody>
-                    </button>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => deletePlaylist()}
-                    >
-                      <ButtonBody>
-                      DELETE
-                      </ButtonBody>
-                    </button>
-                  </>
+                  <ButtonContainer>
+                      <div onClick={() => edit()}>
+                        <Button color={'#E3DAFD'} text={'EDIT'} />
+                      </div>
+                      <div onClick={() => deletePlaylist()}>
+                        <Button text={'DELETE'} color={'#FDDADA'} />
+                      </div>
+                    </ButtonContainer>
                 )}
                 {songLoading ? (
-                  <div>loading...</div>
+                  <DetailsLabel>Loading...</DetailsLabel>
                 ) : (
                   <div>
                       <PageHeader>Songs in {playlist.name}</PageHeader>

@@ -11,6 +11,8 @@ const SongList = () => {
 
   const username = React.useContext(UserContext);
 
+  console.log("in songs: ", username)
+
   useEffect(() => {
     songService
       .getSongsInfo()
@@ -20,10 +22,11 @@ const SongList = () => {
 
   return (
     <div className="container align-items-left">
-      <a href="..">Home</a>
+      <a href=".." className="row">Home</a>
+      <Link to="/menu">Menu</Link>
       <PageHeader>Songs</PageHeader>
       {songLoading ? (
-        <TableHeader>Loading...</TableHeader>
+        <TableBody>Loading...</TableBody>
       ) : (
         <>
           <table className="table my-4">

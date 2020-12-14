@@ -1,28 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ReactDOM from "react-dom";
 import UserContext from '../user'
 import { Link } from 'react-router-dom';
-import SongForm from '../song-form/song-form'
+import { PageHeader } from '../styled-table';
+import Menu from '../menu/menu';
+import { EntryButton } from './styled'
+import { ButtonBody } from "../styled-form";
+import { WelcomeHeader } from '../styled-context-selector'
 
 const Home = () => {
+  const userType = useContext(UserContext);
+
   return (
     <div class="container">
-        <h1>Home</h1>
-        <div>
-            <Link to="/songs">Songs</Link>
-        </div>
-        <div>
-            <Link to="/artists">Artists</Link>
-        </div>
-        <div>
-            <Link to="/playlists">Playlists</Link>
-        </div>
-        <div>
-            <Link to="/users">Users</Link>
-        </div>
-        <div>
-            <Link to="/listeners">Listeners</Link>
-        </div>
+        {(userType == 'artist' || userType == 'listener') && (
+          <WelcomeHeader>Welcome back, {userType}!</WelcomeHeader>
+      )}
+        <Link to="/menu">
+            <EntryButton class="btn"><p>ENTER MIXTAPE</p></EntryButton>
+        </Link>
     </div>
   );
 }

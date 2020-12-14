@@ -5,7 +5,7 @@ import listenerService from "../services/listener-service";
 import { ButtonBody } from '../styled-form';
 import { PageHeader, TableHeader, TableLink, TableBody } from "../styled-table";
 import PlaylistForm from '../playlist-form/playlist-form';
-
+import Button from '../button/button'
 
 const ListenerList = () => {
   const [listenerInfo, setListenerInfo] = useState("");
@@ -35,7 +35,8 @@ const ListenerList = () => {
 
           ) : ( <div>
               <div className="container align-items-left">
-      <a href="..">Home</a>
+              <a href=".." className="row">Home</a>
+      <Link to="/menu">Menu</Link>
       <PageHeader>Listeners</PageHeader>
       {listenerLoading ? (
         <TableHeader>Loading...</TableHeader>
@@ -46,6 +47,7 @@ const ListenerList = () => {
               <tr>
                 <TableHeader scope="col">NAME</TableHeader>
                 <TableHeader scope="col">DATE JOINED</TableHeader>
+                <TableHeader />
               </tr>
             </thead>
             <tbody>
@@ -53,12 +55,12 @@ const ListenerList = () => {
                 return (
                     <tr key={i}>
                         {console.log(listener)}
-                        <td> {listener.name} </td>
-                        <td> {listener.listener.dateJoined} </td>
+                        <td><TableBody>{listener.name}</TableBody></td>
+                        <td><TableBody>{listener.listener.dateJoined}</TableBody></td>
                         <td>
-                        <button onClick={() => createdNewPlaylist(listener.listener.userId)} className="btn btn-success">
-                            <ButtonBody>CREATE PLAYLIST</ButtonBody>
-                        </button>
+                        <div onClick={() => createdNewPlaylist(listener.listener.userId)}>
+                          <Button text={'CREATE PLAYLIST'} color={"#A0D9B4"} />
+                        </div>
                         </td>
                     </tr>
                 );

@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import artistService from "../services/artist-service";
 import listenerService from "../services/listener-service";
 import userService from "../services/user-service";
-import { FormLabel, ButtonBody } from '../styled-form';
+import { FormContainer, FormLabel, ButtonBody } from '../styled-form';
+import Button from '../button/button'
 
 const UserForm = ({currUser, isEditing}) => {
 
@@ -21,7 +22,7 @@ const UserForm = ({currUser, isEditing}) => {
         };
         userService
           .createNewUser(newUser)
-          .then((response) => console.log(response));
+          .then((response) => console.log("new user: ", response));
       };
 
     const update = () => {
@@ -41,6 +42,7 @@ const UserForm = ({currUser, isEditing}) => {
 
 
     return (
+      <FormContainer>
         <form className="my-4">
         <div className="form-group">
           <FormLabel htmlFor="firstName">FIRST NAME</FormLabel>
@@ -83,16 +85,17 @@ const UserForm = ({currUser, isEditing}) => {
           />
         </div>
         {isEditing ? (
-            <button onClick={() => update()} className="btn btn-success">
-               <ButtonBody>UPDATE</ButtonBody>
-            </button>
+            <div onClick={() => update()}>
+               <Button text={'UPDATE'} />
+            </div>
         )
         : (
-        <button onClick={() => createUser()} className="btn btn-success">
-          <ButtonBody>CREATE USER</ButtonBody>
-        </button>
+        <div onClick={() => createUser()}>
+          <Button text={'CREATE USER'} color={"#A0D9B4"} />
+        </div>
         )}
       </form>
+      </FormContainer>
     )
 }
 

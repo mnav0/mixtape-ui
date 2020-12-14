@@ -19,7 +19,8 @@ const ArtistList = () => {
 
   return (
     <div className="container align-items-left">
-        <a href="..">Home</a>
+       <a href=".." className="row">Home</a>
+      <Link to="/menu">Menu</Link>
         <PageHeader>Artists</PageHeader>
       {(artistListLoading) ? (
         <div>

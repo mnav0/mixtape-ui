@@ -5,7 +5,9 @@ import listenerService from "../services/listener-service";
 import userService from "../services/user-service";
 import UserForm from "../user-form/user-form";
 import SongForm from "../song-form/song-form";
-import { ButtonBody } from '../styled-form';
+import { DetailsHeader, Name, DetailsLabel, DetailsBody, ButtonContainer } from '../styled-details'
+import Button from '../button/button'
+import { TableLink } from '../styled-table'
 
 const Profile = ({ ...props }) => {
   const [user, setUser] = useState({});
@@ -50,43 +52,51 @@ const Profile = ({ ...props }) => {
 
   return (
     <div className="container my-5">
+      <Link to="/menu" className="row">Menu</Link>
       {isDeleted ? (
         <>
-          <h2>user has been deleted</h2>
-          <Link to={"/users"}>Back to all users</Link>
+          <Name>User has been deleted</Name>
+          <TableLink to={"/users"}>Back to all users</TableLink>
         </>
       ) : (
         <>
-          <h1>Profile</h1>
+          <DetailsHeader>Profile</DetailsHeader>
           {userLoading ? (
-            <h2>loading ...</h2>
+            <DetailsLabel>Loading ...</DetailsLabel>
           ) : (
             <>
               <div>
-                <h3>
+                <Name>
                   {user.firstName} {user.lastName}
-                </h3>
+                </Name>
                 {isEditing ? (
                   <UserForm currUser={user} isEditing={true} />
                 ) : (
                   <>
-                    <p>birthday: {user.dob}</p>
-                    <p>username: {user.username}</p>
-                    <p>password: {user.password}</p>
+                  <div>
+                    <DetailsLabel>BIRTHDAY:</DetailsLabel> 
+                    <DetailsBody>{user.dob}</DetailsBody>
+                  </div>
+                  <div>
+                    <DetailsLabel>USERNAME:</DetailsLabel>
+                    <DetailsBody>{user.username}</DetailsBody>
+                  </div>
+                  <div>
+                    <DetailsLabel>PASSWORD:</DetailsLabel>
+                    <DetailsBody>{user.password}</DetailsBody>
+                  </div>
                   </>
                 )}
                 {!isEditing && (
                   <>
-                    <button className="btn btn-warning" onClick={() => edit()}>
-                    <ButtonBody>EDIT</ButtonBody>
-                    </button>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => deleteUser()}
-                    ><ButtonBody>
-                      DELETE
-                      </ButtonBody>
-                    </button>
+                  <ButtonContainer>
+                    <div onClick={() => edit()}>
+                      <Button color={'#E3DAFD'} text={'EDIT'} />
+                    </div>
+                    <div onClick={() => deleteUser()}>
+                      <Button text={'DELETE'} color={'#FDDADA'} />
+                    </div>
+                    </ButtonContainer>
                   </>
                 )}
               </div>

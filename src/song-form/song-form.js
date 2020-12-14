@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import songService from "../services/song-service";
-import { FormLabel, ButtonBody } from '../styled-form'
+import { FormContainer, FormLabel, ButtonBody } from '../styled-form'
+import Button from '../button/button'
 
 const SongForm = ({currSong, isEditing, artistId}) => {
 
@@ -29,7 +30,7 @@ const SongForm = ({currSong, isEditing, artistId}) => {
     }
     
     return (
-        <div>
+        <FormContainer>
         <form className="my-4">
         <div className="form-group">
           <FormLabel htmlFor="name">SONG NAME</FormLabel>
@@ -52,19 +53,17 @@ const SongForm = ({currSong, isEditing, artistId}) => {
           />
         </div>
         {isEditing ? (
-            <button onClick={() => updateSong()}>
-              <ButtonBody>
-                UPDATE
-                </ButtonBody>
-            </button>
+          <div onClick={() => updateSong()}>
+            <Button text={'UPDATE'} />
+          </div>
         )
         : (
-        <button onClick={() => createSong()} className="btn btn-success" type="button">
-          <ButtonBody>CREATE SONG</ButtonBody>
-        </button>
+        <div onClick={() => createSong()}>
+          <Button text={'CREATE SONG'}></Button>
+        </div>
         )}
       </form>
-      </div>
+      </FormContainer>
     )
 }
 
